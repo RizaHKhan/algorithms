@@ -17,6 +17,7 @@ function palindromeCutting(s) {
       }
     }
   }
+  return s;
 }
 
 describe("palindromeCutting", () => {
@@ -24,5 +25,11 @@ describe("palindromeCutting", () => {
     const string = "aaacodedoc";
     const results = palindromeCutting(string);
     expect(results).toBe("");
+  });
+
+  it("should return nothing", () => {
+    const string = "codesignal";
+    const results = palindromeCutting(string);
+    expect(results).toBe("codesignal");
   });
 });
