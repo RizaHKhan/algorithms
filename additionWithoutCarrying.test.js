@@ -1,7 +1,6 @@
 function additionWithoutCarrying(param1, param2) {
   let result = 0,
     num = 1;
-
   while (param1 + param2 > 0) {
     num *= 10; // multiply num by 10
     console.log({ num });
@@ -9,7 +8,6 @@ function additionWithoutCarrying(param1, param2) {
     param1 -= param1 % num;
     param2 -= param2 % num;
   }
-
   return result;
 }
 
