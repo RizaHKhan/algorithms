@@ -23,15 +23,19 @@ function diagonalSort(m) {
     }
   }
 
-  flat.forEach((valOutter, outterIndex) => {
-    let counter = outterIndex;
-    valOutter.forEach((valInner, innerIndex) => {
-      console.log(valInner, counter);
-      counter++;
+  flat.forEach((o, oI) => {
+    let rowReducer = 0;
+
+    counter = 0;
+    o.forEach((i, iI) => {
+      if (oI > rows) {
+        rowReducer++;
+      }
+      // newMatrix[oI][iI - counter] = i;
+      console.log({ outter: oI - rowReducer }, iI);
+      counter--;
     });
   });
-
-  console.log(newMatrix);
 }
 
 const matrix = [
@@ -49,5 +53,12 @@ diagonalSort(matrix);
  [ 9, 5, 4, 2  ],
  [ 9, 6, 7, 2  ],
  [ 7, 9, 7, 2  ]
+ ]
+
+ [
+   [ {0, 0}, , 3, 1  ],
+   [ {1, 0}, { 1, 1 }, 4, 2  ],
+   [ 9, { 2, 1 }, { 2, 2 }, 2  ],
+   [ { 3, 0 }, { 3, 1 }, 7, 2  ]
  ]
  */
