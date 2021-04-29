@@ -1,60 +1,62 @@
-function HashTable() {
-  this.values = {};
-  this.length = 0;
-  this.size = 0;
+class HashTable {
+  constructor() {
+    this.values = {};
+    this.length = 0;
+    this.size = 0;
+  }
+
+  calculateHash(name, age) {
+    return name + age;
+  }
+
+  addItem(item) {
+    const hash = this.calculateHash(item.name, item.age);
+
+    if (!this.values.hasOwnProperty(hash)) {
+      this.values[hash] = item;
+      this.length++;
+    } else if (Array.isArray(this.values[hash])) {
+      this.values[hash].push(item);
+    } else {
+      const temp = this.values[hash];
+      this.values[hash] = [];
+      this.values[hash].push(temp);
+      this.values[hash].push(item);
+    }
+  }
+
+  deleteItem(item) {
+    const hash = this.calculateHash(item.name, item.age);
+
+    if (hash) {
+      if (Array.isArray(this.values[hash])) {
+        for (let [i, v] of this.values[hash].entries()) {
+          if (compareObjects(v, item)) {
+            this.values[hash].splice(i, 1);
+          }
+        }
+      } else {
+        delete this.values[hash];
+        this.length--;
+      }
+    }
+  }
+
+  findItem(item) {
+    const hash = this.calculateHash(item.name, item.age);
+    if (hash) {
+      if (Array.isArray(this.values[hash])) {
+        for (let i of this.values[hash]) {
+          if (compareObjects(i, item)) {
+            return i;
+          }
+        }
+      } else {
+        return this.values[hash];
+      }
+    }
+  }
 }
-
-HashTable.prototype.calculateHash = function (name, age) {
-  return name + age;
-};
-
-HashTable.prototype.addItem = function (item) {
-  const hash = this.calculateHash(item.name, item.age);
-
-  if (!this.values.hasOwnProperty(hash)) {
-    this.values[hash] = item;
-    this.length++;
-  } else if (Array.isArray(this.values[hash])) {
-    this.values[hash].push(item);
-  } else {
-    const temp = this.values[hash];
-    this.values[hash] = [];
-    this.values[hash].push(temp);
-    this.values[hash].push(item);
-  }
-};
-
-HashTable.prototype.deleteItem = function (item) {
-  const hash = this.calculateHash(item.name, item.age);
-
-  if (hash) {
-    if (Array.isArray(this.values[hash])) {
-      for (let [i, v] of this.values[hash].entries()) {
-        if (compareObjects(v, item)) {
-          this.values[hash].splice(i, 1);
-        }
-      }
-    } else {
-      delete this.values[hash];
-      this.length--;
-    }
-  }
-};
-
-HashTable.prototype.findItem = function (item) {
-  const hash = this.calculateHash(item.name, item.age);
-  if (hash) {
-    if (Array.isArray(this.values[hash])) {
-      for (let i of this.values[hash]) {
-        if (compareObjects(i, item)) {
-          return i;
-        }
-      }
-    } else {
-      return this.values[hash];
-    }
-  }
-};
 
 function compareObjects(a, b) {
   for (const item in a) {
