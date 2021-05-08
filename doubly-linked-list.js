@@ -2,38 +2,38 @@ class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
+    this.prev = null;
   }
 }
 
-class LinkedList {
+class DoublyLinkedList {
   constructor(value) {
     this.head = {
       value: value,
       next: null,
+      prev: null,
     };
     this.tail = this.head;
     this.length = 1;
   }
 
-  // the linked list has three properites
-  // A HEAD, TAIL and LENGTH, all which get updated as we add/remove items
-  // When the linked list is first created, the tail is the head (there is only one property)
-
   append(value) {
     const newNode = new Node(value);
+
+    newNode.prev = this.tail;
     this.tail.next = newNode;
     this.tail = newNode;
     this.length++;
     return this;
   }
 
-  // When appending (adding to the end), we first create a new node
-  // We update the values in the constructor as follows. The new tail
-
   prepend(value) {
     const newNode = new Node(value);
+
     newNode.next = this.head;
+    this.head.prev = newNode;
     this.head = newNode;
+    this.head.prev = newNode;
     this.length++;
     return this;
   }
@@ -45,6 +45,7 @@ class LinkedList {
       array.push(currentNode.value);
       currentNode = currentNode.next;
     }
+
     return array;
   }
 
@@ -56,9 +57,11 @@ class LinkedList {
 
     const newNode = new Node(value);
     const leader = this.traverseToIndex(index - 1);
-    const holdingPointer = leader.next;
+    const follower = leader.next;
     leader.next = newNode;
-    newNode.next = holdingPointer;
+    newNode.prev = leader;
+    newNode.next = follower;
+    follower.prev = newNode;
     this.length++;
     return this.printList();
 
@@ -86,11 +89,12 @@ class LinkedList {
   }
 }
 
-const myLinkedList = new LinkedList(10);
+const myLinkedList = new DoublyLinkedList(10);
 myLinkedList.append(5);
 myLinkedList.append(16);
 myLinkedList.prepend(1);
 myLinkedList.insert(200, 99);
 myLinkedList.insert(2, 99);
-myLinkedList.remove(2);
+// myLinkedList.remove(2);
+console.log(myLinkedList);
 console.log(myLinkedList.printList());

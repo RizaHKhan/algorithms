@@ -22,4 +22,5 @@ function mergeSortedArrays(a, b) {
     }
     return mergedArray;
 }
+
 console.log(mergeSortedArrays([0, 3, 4, 31], [4, 6, 30, 44, 45]));
